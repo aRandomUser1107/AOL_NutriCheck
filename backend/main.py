@@ -1,14 +1,20 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
-from security import hash_password
-import models, schemas
+import models
 from database import engine, get_db
+from routers import auth, users
+from goals import logs, foods, articles
 
+# create all database tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+    title="NutriCheck API",
+    description="Backend API for the NutriCheck nutrition tracking system",
+    version="1.0.0"
+)
 
+# connect with frontend (Next.js)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -17,31 +23,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# register all routers
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(logs.router)
+app.include_router(foods.router)
+app.include_router(articles.router)
+
 @app.get("/")
 def read_root():
-    return {"message": "Nutrition API is running and database is connected"}
-
-@app.get("/api/check-db")
-def check_db(db: Session = Depends(get_db)):
-    users = db.query(models.User).all()
-    return {"user_count": len(users)}
-
-@app.post("/api/register", response_model=schemas.UserResponse)
-def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-
-    hashed_pwd = hash_password(user.password)
-
-    new_user = models.User(
-        username=user.username,
-        email=user.email,
-        password=hashed_pwd
-    )
-    
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+    return {"message": "NutriCheck API is running.", "docs": "/docs"}

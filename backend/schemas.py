@@ -1,7 +1,9 @@
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import List, Optional
 from datetime import datetime
 
+
+# food items schema
 class FoodItemBase(BaseModel):
     name: str
     calories: float
@@ -16,8 +18,10 @@ class FoodItemResponse(FoodItemBase):
     id: int
     model_config = ConfigDict(from_attributes=True)
 
+
+# food entry schema
 class FoodEntryBase(BaseModel):
-    category: str
+    category: str # breakfast, dinner, lunch, snack
     quantity: int = 1
 
 class FoodEntryCreate(FoodEntryBase):
@@ -28,9 +32,10 @@ class FoodEntryResponse(FoodEntryBase):
     food_id: int
     updatedAt: datetime
     food_item: Optional[FoodItemResponse] = None
-
     model_config = ConfigDict(from_attributes=True)
 
+
+# nutrition log schema
 class NutritionLogBase(BaseModel):
     totalNutrition: float = 0.0
 
@@ -42,10 +47,11 @@ class NutritionLogResponse(NutritionLogBase):
     user_id: int
     logDate: datetime
     updatedAt: datetime
-    entries: List[FoodEntryResponse] = [] 
-
+    entries: List[FoodEntryResponse] = []
     model_config = ConfigDict(from_attributes=True)
 
+
+# articles schema
 class ArticleBase(BaseModel):
     title: str
     content: str
@@ -57,7 +63,6 @@ class ArticleResponse(ArticleBase):
     id: int
     writer_id: int
     postDate: datetime
-
     model_config = ConfigDict(from_attributes=True)
 
 class NutritionistBase(BaseModel):
@@ -67,13 +72,27 @@ class NutritionistResponse(NutritionistBase):
     id: int
     user_id: int
     articles: List[ArticleResponse] = []
+    model_config = ConfigDict(from_attributes=True)
 
+
+# nutrition goals schema
+class NutritionGoalBase(BaseModel):
+    goalType: str # calories, protein, etc
+    targetValue: float
+    unit: str # kg or g
+
+class NutritionGoalCreate(NutritionGoalBase):
+    pass
+
+class NutritionGoalResponse(NutritionGoalBase):
+    id: int
+    health_profile_id: int
     model_config = ConfigDict(from_attributes=True)
 
 class HealthProfileBase(BaseModel):
     age: int
-    height: float
-    weight: float
+    height: float # cm
+    weight: float # kg
 
 class HealthProfileCreate(HealthProfileBase):
     pass
@@ -81,19 +100,24 @@ class HealthProfileCreate(HealthProfileBase):
 class HealthProfileResponse(HealthProfileBase):
     id: int
     user_id: int
-
     model_config = ConfigDict(from_attributes=True)
 
+# authentication and user schema
 class UserBase(BaseModel):
     username: str
     email: EmailStr
 
 class UserCreate(UserBase):
-    password: str 
+    password: str                   
+    role: str = "user" # role: "user" or "nutritionist"
+    bio: Optional[str] = None       
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
 
 class UserResponse(UserBase):
     id: int
     health_profile: Optional[HealthProfileResponse] = None
     nutritionist_profile: Optional[NutritionistResponse] = None
-
     model_config = ConfigDict(from_attributes=True)
