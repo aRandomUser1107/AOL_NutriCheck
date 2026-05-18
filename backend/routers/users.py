@@ -106,3 +106,12 @@ def update_goal(goal_id: int, goal_data: schemas.NutritionGoalCreate, db: Sessio
     db.commit()
     db.refresh(goal)
     return goal
+
+# delete goal
+@router.delete("/goals/{goal_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_goal(goal_id: int, db: Session = Depends(get_db)):
+    goal = db.query(models.NutritionGoal).filter(models.NutritionGoal.id == goal_id).first()
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal not found")
+    db.delete(goal)
+    db.commit()
