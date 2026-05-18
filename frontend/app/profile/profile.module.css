@@ -1,0 +1,424 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: calc(var(--nav-h) + 36px) 24px 60px;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 4px 0 6px;
+}
+
+.sub {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.leftCol,
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  padding: 24px;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.03em;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s;
+  background: white;
+}
+
+.inputWrap:focus-within {
+  border-color: var(--accent);
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: #000;
+  background: transparent;
+}
+
+/* placeholder */
+.input::placeholder {
+  color: #6b7280; 
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.unit {
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--stone-50);
+  border-left: 1.5px solid var(--border);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+}
+
+.formFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.msg {
+  font-size: 13px;
+  font-weight: 500;
+}
+.success {
+  color: var(--tropical-teal);
+}
+.error {
+  color: #dc2626;
+}
+
+.goalList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.goalItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--stone-50);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+.goalInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.goalType {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--text-primary);
+}
+
+.goalTarget {
+  font-size: 13px;
+  color: var(--tropical-teal);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-light);
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+.deleteBtn:hover {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.emptyGoals {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.addGoalForm {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.select {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-primary);
+  background: white;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  text-transform: capitalize;
+}
+.select:focus {
+  border-color: var(--accent);
+}
+
+.bmiDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 28px;
+}
+
+.bmiNum {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.bmiCat {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.scaleWrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.scaleBar {
+  display: flex;
+  height: 10px;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.scaleUnder {
+  flex: 1.85;
+  background: #b0d8d4;
+}
+.scaleNormal {
+  flex: 1.65;
+  background: #9ec1a3;
+}
+.scaleOver {
+  flex: 1;
+  background: #fcd34d;
+}
+.scaleObese {
+  flex: 1;
+  background: #f87171;
+}
+
+.scaleMarker {
+  position: absolute;
+  top: -3px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 3px solid var(--stone-700);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.scaleLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-light);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.bmiRanges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bmiRange {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bmiDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bmiRangeLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.bmiRangeVal {
+  font-size: 13px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bmiFormula {
+  font-size: 12px;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.bmiEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.bmiEmptyIcon {
+  font-size: 40px;
+}
+
+.statList {
+  display: flex;
+  flex-direction: column;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.statRow:last-child {
+  border-bottom: none;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.skeletons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.skeleton {
+  height: 340px;
+  background: linear-gradient(
+    90deg,
+    var(--stone-100) 25%,
+    var(--stone-200) 50%,
+    var(--stone-100) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-lg);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .skeletons {
+    grid-template-columns: 1fr;
+  }
+  .heading {
+    font-size: 26px;
+  }
+  .bmiNum {
+    font-size: 48px;
+  }
+}
