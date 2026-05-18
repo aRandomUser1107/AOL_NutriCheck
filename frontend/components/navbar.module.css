@@ -10,7 +10,6 @@
   padding: 14px clamp(18px, 4vw, 56px);
   border-bottom: 1px solid #244a4f;
   background: #18373b;
-  box-shadow: 0 18px 40px rgba(24, 55, 59, 0.18);
   backdrop-filter: blur(16px);
 }
 
