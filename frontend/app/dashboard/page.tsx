@@ -120,10 +120,6 @@ export default function DashboardPage() {
           <h1 className={styles.heading}>Good {greeting}</h1>
           <p className={styles.subheading}>Here&apos;s your nutrition overview for today.</p>
         </div>
-
-        <Link href="/log" className={`btn-ghost ${styles.headerAction}`}>
-          View log
-        </Link>
       </header>
 
       {loading ? (

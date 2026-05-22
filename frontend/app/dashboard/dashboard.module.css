@@ -30,17 +30,6 @@
   font-weight: 500;
 }
 
-.headerAction {
-  flex-shrink: 0;
-  background: var(--black);
-  color: #ffffff;
-}
-
-.headerAction:hover {
-  background: var(--nav-hover);
-  color: #ffffff;
-}
-
 .statsGrid {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) minmax(180px, 1fr);
@@ -383,11 +372,6 @@
   .profileStrip {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .headerAction {
-    width: 100%;
-    justify-content: center;
   }
 
   .profileStats {
