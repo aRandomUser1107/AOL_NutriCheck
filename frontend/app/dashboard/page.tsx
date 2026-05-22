@@ -32,6 +32,10 @@ type Bmi = {
 
 const CALORIE_GOAL = 2000;
 
+function hasLoggedFood(summary: Summary | null): summary is Summary {
+  return Boolean(summary && summary.entries_count > 0);
+}
+
 function formatDate(value: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
@@ -95,14 +99,16 @@ export default function DashboardPage() {
     return "evening";
   }, []);
 
-  const calPercent = summary ? Math.min((summary.calories / CALORIE_GOAL) * 100, 100) : 0;
-  const remainingCalories = Math.max(CALORIE_GOAL - (summary?.calories ?? 0), 0);
+  const hasSummary = hasLoggedFood(summary);
+  const activeSummary = hasSummary ? summary : null;
+  const calPercent = activeSummary ? Math.min((activeSummary.calories / CALORIE_GOAL) * 100, 100) : 0;
+  const remainingCalories = activeSummary ? Math.max(CALORIE_GOAL - activeSummary.calories, 0) : null;
 
-  const macros = summary
+  const macros = activeSummary
     ? [
-        { label: "Protein", value: summary.protein, unit: "g", color: "var(--teal)", max: 150 },
-        { label: "Carbs", value: summary.carbohydrates, unit: "g", color: "var(--sage)", max: 250 },
-        { label: "Fats", value: summary.fats, unit: "g", color: "#f2a766", max: 65 },
+        { label: "Protein", value: activeSummary.protein, unit: "g", color: "var(--teal)", max: 150 },
+        { label: "Carbs", value: activeSummary.carbohydrates, unit: "g", color: "var(--sage)", max: 250 },
+        { label: "Fats", value: activeSummary.fats, unit: "g", color: "#f2a766", max: 65 },
       ]
     : [];
 
@@ -132,25 +138,31 @@ export default function DashboardPage() {
             <article className={`card ${styles.calorieCard}`}>
               <p className="label">Calories today</p>
               <div className={styles.calorieRow}>
-                <span className={styles.bigNum}>{summary?.calories ?? 0}</span>
-                <span className={styles.calorieGoal}>/ {CALORIE_GOAL} kcal</span>
+                <span className={styles.bigNum}>{activeSummary ? activeSummary.calories : "-"}</span>
+                <span className={styles.calorieGoal}>{activeSummary ? `/ ${CALORIE_GOAL} kcal` : "kcal"}</span>
               </div>
-              <div className={styles.progressTrack}>
-                <div
-                  className={styles.progressFill}
-                  style={{
-                    width: `${calPercent}%`,
-                    background: calPercent > 90 ? "#f87171" : "var(--blue)",
-                  }}
-                />
-              </div>
-              <p className={styles.progressLabel}>{remainingCalories} kcal remaining</p>
+              {activeSummary ? (
+                <>
+                  <div className={styles.progressTrack}>
+                    <div
+                      className={styles.progressFill}
+                      style={{
+                        width: `${calPercent}%`,
+                        background: calPercent > 90 ? "#f87171" : "var(--blue)",
+                      }}
+                    />
+                  </div>
+                  <p className={styles.progressLabel}>{remainingCalories} kcal remaining</p>
+                </>
+              ) : (
+                <p className={styles.progressLabel}>No calorie data yet.</p>
+              )}
             </article>
 
             <article className={`card ${styles.statCard}`}>
               <p className="label">Meals logged</p>
-              <span className={styles.bigNum}>{summary?.entries_count ?? 0}</span>
-              <p className={styles.statSub}>entries today</p>
+              <span className={styles.bigNum}>{activeSummary ? activeSummary.entries_count : "-"}</span>
+              <p className={styles.statSub}>{activeSummary ? "entries today" : "No entries yet"}</p>
               <Link href="/log" className={`btn-ghost ${styles.cardLink}`}>
                 View log
               </Link>
@@ -179,7 +191,7 @@ export default function DashboardPage() {
           <section className={styles.bottomGrid}>
             <article className={`card ${styles.macroCard}`}>
               <h2 className={styles.cardTitle}>Macro Breakdown</h2>
-              {summary ? (
+              {activeSummary ? (
                 <div className={styles.macroList}>
                   {macros.map((macro) => (
                     <div key={macro.label} className={styles.macroRow}>

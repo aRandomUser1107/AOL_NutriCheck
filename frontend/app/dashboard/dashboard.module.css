@@ -75,10 +75,26 @@
 
 .statCard:nth-child(2) {
   background: var(--teal);
+  color: #ffffff;
 }
 
 .statCard:nth-child(3) {
   background: var(--mint);
+}
+
+.statCard:nth-child(2) :global(.label),
+.statCard:nth-child(2) .statSub {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.statCard:nth-child(2) .cardLink {
+  border-color: rgba(255, 255, 255, 0.58);
+  color: #ffffff;
+}
+
+.statCard:nth-child(2) .cardLink:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #ffffff;
 }
 
 .bigNum {
