@@ -3,7 +3,7 @@ import styles from "./navbar.module.css";
 
 const navigationItems = [
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/log", label: "Log" },
+  { href: "/log", label: "My Log" },
   { href: "/profile", label: "Profile" },
   { href: "/articles", label: "Articles" },
 ];
@@ -22,7 +22,6 @@ export default function Navbar() {
           </Link>
         ))}
       </nav>
-
     </header>
   );
 }
