@@ -1,7 +1,9 @@
-const BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
 
 // temporary (auth not yet implemented)
 export const USER_ID = 1;
+export const NUTRITIONIST_ID = 1;
+export const USER_ROLE = "nutritionist" as "user" | "nutritionist";
 
 export async function apiFetch(path: string, options?: RequestInit) {
   const res = await fetch(`${BASE}${path}`, {
