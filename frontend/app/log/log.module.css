@@ -1,0 +1,192 @@
+.page {
+  flex: 1;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 30px clamp(20px, 4vw, 48px) 48px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.heading {
+  margin: 4px 0 6px;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.subheading {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.searchLabel {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.searchInput {
+  min-height: 44px;
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: var(--black);
+  color: #ffffff;
+  outline: none;
+  padding: 12px 18px;
+}
+
+.searchInput::placeholder {
+  color: #9da8a6;
+}
+
+.logCard {
+  padding: 24px;
+  box-shadow: 0 18px 45px rgba(24, 55, 59, 0.08);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cardHead h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.cardHead span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.entryList,
+.skeletonList {
+  display: grid;
+  gap: 12px;
+}
+
+.entryItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--stone-50);
+  padding: 16px;
+}
+
+.entryItem strong,
+.entryItem span {
+  display: block;
+}
+
+.entryItem strong {
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.entryItem span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.nutrients {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.nutrients div {
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 10px;
+}
+
+.nutrients dt {
+  color: var(--text-light);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.nutrients dd {
+  margin: 4px 0 0;
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.emptyState {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  text-align: center;
+}
+
+.emptyState h2 {
+  margin: 0 0 8px;
+  color: var(--foreground);
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.emptyState p {
+  max-width: 360px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.skeleton {
+  height: 86px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--stone-100) 25%, var(--stone-200) 50%, var(--stone-100) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .header,
+  .entryItem {
+    grid-template-columns: 1fr;
+  }
+
+  .nutrients {
+    grid-template-columns: 1fr;
+  }
+}
