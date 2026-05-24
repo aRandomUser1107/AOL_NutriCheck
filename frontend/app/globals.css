@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import "tailwindcss";
 
 :root {
-  --jet-black:     #1F363D;
-  --cerulean:      #40798C;
-  --tropical-teal: #70A9A1;
-  --muted-teal:    #9EC1A3;
-  --tea-green:     #CFE0C3;
+  --jet-black: #1f363d;
+  --cerulean: #40798c;
+  --tropical-teal: #70a9a1;
+  --muted-teal: #9ec1a3;
+  --tea-green: #cfe0c3;
 
-  --teal-50:  #f0f7f6;
+  --teal-50: #f0f7f6;
   --teal-100: #d6eceb;
   --teal-200: #b0d8d4;
-  --teal-600: #40798C;
+  --teal-600: #40798c;
   --teal-700: #2f5d6e;
-  --teal-800: #1F363D;
+  --teal-800: #1f363d;
 
-  --stone-50:  #f7f9f9;
+  --stone-50: #f7f9f9;
   --stone-100: #edf1f2;
   --stone-200: #d4dcde;
   --stone-300: #b0bec2;
@@ -22,48 +22,91 @@
   --stone-500: #526870;
   --stone-600: #3d5158;
   --stone-700: #2d3f45;
-  --stone-800: #1F363D;
+  --stone-800: #1f363d;
   --stone-900: #152830;
 
-  /* Semantic */
-  --bg:           #f4f8f7;
-  --bg-card:      #ffffff;
-  --text-primary: var(--jet-black);
-  --text-muted:   var(--stone-500);
-  --text-light:   var(--stone-400);
-  --border:       var(--stone-200);
-  --border-light: var(--stone-100);
-  --accent:       var(--cerulean);
-  --accent-light: var(--teal-50);
-  --accent-dark:  var(--teal-700);
+  --background: #f0f1f0;
+  --foreground: #111b1c;
+  --nav: #18373b;
+  --nav-hover: #244a4f;
+  --panel: #ffffff;
+  --muted: #667776;
+  --line: #e1e7e3;
+  --blue: #43879a;
+  --teal: #75b3a8;
+  --sage: #a6c8a8;
+  --mint: #d2dfc4;
+  --black: #050707;
 
-  --font-display: 'Cabinet Grotesk', sans-serif;
-  --font-serif:   'Instrument Serif', serif;
-  --font-body:    'DM Sans', sans-serif;
+  --bg: var(--background);
+  --bg-card: var(--panel);
+  --text-primary: var(--jet-black);
+  --text-muted: var(--stone-500);
+  --text-light: var(--stone-400);
+  --border: var(--stone-200);
+  --border-light: var(--stone-100);
+  --accent: var(--cerulean);
+  --accent-light: var(--teal-50);
+  --accent-dark: var(--teal-700);
+  --green-600: #4f8f62;
+
+  --font-display: var(--font-roboto), Arial, Helvetica, sans-serif;
+  --font-body: var(--font-roboto), Arial, Helvetica, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-xl: 24px;
   --nav-h: 64px;
+  --shadow-sm: 0 8px 18px rgba(31, 54, 61, 0.12);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-roboto);
+}
 
-html { scroll-behavior: smooth; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text-primary);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--stone-300); border-radius: 99px; }
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--stone-300);
+  border-radius: 99px;
+}
 
 .page-content {
   max-width: 1100px;
@@ -120,3 +163,4 @@ body {
   text-transform: uppercase;
   color: var(--text-light);
 }
+
