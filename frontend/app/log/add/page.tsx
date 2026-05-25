@@ -89,6 +89,10 @@ function applyFiltersAndSort(
   return result;
 }
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : "Failed to add food entry.";
+}
+
 function AddFoodInner() {
   const router       = useRouter();
   const searchParams = useSearchParams();
@@ -153,8 +157,8 @@ function AddFoodInner() {
       });
       setSuccess(true);
       setTimeout(() => router.push("/log"), 1200);
-    } catch (e: any) {
-      setError(e.message || "Failed to add food entry.");
+    } catch (error: unknown) {
+      setError(getErrorMessage(error));
       setAdding(false);
     }
   }
@@ -273,7 +277,7 @@ function AddFoodInner() {
           {/* To count the results */}
           <div className={styles.resultsCount}>
             {loadingFoods ? "Loading catalogue…" : `${filtered.length} food${filtered.length !== 1 ? "s" : ""} found`}
-            {query && <span> for "<strong>{query}</strong>"</span>}
+            {query && <span> for &quot;<strong>{query}</strong>&quot;</span>}
           </div>
 
           {/* load food catalogue */}
