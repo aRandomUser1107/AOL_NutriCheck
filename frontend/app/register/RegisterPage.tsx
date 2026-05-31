@@ -29,8 +29,7 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
         method: "POST",
         body: JSON.stringify({ username, email, password, role }),
       });
-      // Redirect to login after successful registration
-      onSwitch(); // if used inside a toggle view
+      onSwitch();
       router.push("/login");
     } catch (e: any) {
       setError(e.message || "Registration failed. Please try again.");
@@ -46,7 +45,6 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
       exit={{ opacity: 0 }}
       className="min-h-screen relative text-[#1F363D] font-sans overflow-hidden flex flex-col bg-[#CFE0C3]/10"
     >
-      {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div
           key="register"
@@ -60,7 +58,6 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
       </AnimatePresence>
       <div className="fixed inset-0 z-0 bg-[#F2F7F2]/40 backdrop-blur-[1px] pointer-events-none" />
 
-      {/* Navbar */}
       <nav className="w-full px-12 md:px-20 py-8 md:py-10 flex justify-between items-center z-50">
         <span className="text-2xl md:text-3xl font-bold tracking-tighter text-[#1F363D] font-serif">NutriCheck</span>
         <div className="flex flex-col items-end">
@@ -76,11 +73,9 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
         </div>
       </nav>
 
-      {/* Main */}
       <div className="flex-1 flex relative items-center justify-center -mt-8 md:-mt-12">
         <main className="max-w-6xl w-full mx-auto px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center h-full">
 
-          {/* Left — heading */}
           <div className="lg:col-span-4 hidden lg:flex flex-col justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -98,13 +93,11 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
             </motion.div>
           </div>
 
-          {/* Center — form card */}
           <div className="lg:col-span-5 flex justify-center items-center z-10 w-full">
             <motion.div
               layout
               className="bg-white/95 backdrop-blur-3xl w-full max-w-[420px] min-h-[580px] rounded-[2.5rem] shadow-[0_45px_100px_-20px_rgba(31,54,61,0.18)] py-14 px-6 border border-white/80 relative overflow-hidden flex flex-col justify-center items-center"
             >
-              {/* Card header */}
               <div className="text-center flex flex-col gap-3 mb-10 w-full max-w-[290px] mx-auto">
                 <h3 className="text-[2.5rem] font-bold font-serif text-[#1F363D] tracking-tight leading-tight">Register</h3>
                 <div className="flex items-center justify-center gap-2.5">
@@ -116,7 +109,6 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
                 </div>
               </div>
 
-              {/* Form */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -143,13 +135,12 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
                   <FormInput
                     icon={<Lock className="w-5 h-5" />}
                     type="password"
-                    placeholder="Passphrase"
+                    placeholder="Password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     autoComplete="new-password"
                   />
 
-                  {/* Role selector */}
                   <div className="relative w-full">
                     <div className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#40798C]/85 z-20 flex items-center justify-center pointer-events-none">
                       <Activity className="w-5 h-5" />
@@ -167,7 +158,6 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
                   </div>
                 </div>
 
-                {/* Error message */}
                 {error && (
                   <p className="text-[12px] font-semibold text-red-500 bg-red-50 rounded-xl px-4 py-2.5 text-center">
                     {error}
@@ -188,7 +178,6 @@ export default function RegisterPage({ onSwitch = () => {} }: RegisterPageProps)
             </motion.div>
           </div>
 
-          {/* Right — feature strips */}
           <div className="lg:col-span-3 hidden lg:flex flex-col justify-center gap-6">
             <motion.div
               initial={{ opacity: 0, x: 50 }}

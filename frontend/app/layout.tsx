@@ -3,14 +3,14 @@ import { Roboto, Geist, Geist_Mono } from "next/font/google";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import "./globals.css";
 
-// 1. Friend's Font
+// font 1
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
 });
 
-// 2. Your Fonts
+// font 2
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -37,7 +37,6 @@ export default function RootLayout({
       className={`${roboto.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Correctly opening and closing LayoutWrapper around your children */}
         <LayoutWrapper>
           {children}
         </LayoutWrapper>
