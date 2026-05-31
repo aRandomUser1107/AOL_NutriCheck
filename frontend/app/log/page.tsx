@@ -68,24 +68,32 @@ export default function LogPage() {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  useEffect(() => { loadLog(); }, []);
+  useEffect(() => {
+    let cancelled = false;
 
-  // api not connected yet
-  async function loadLog() {
-    setLoading(true);
-    try {
-      const [logData, summaryData] = await Promise.all([
-        apiFetch(`/api/logs/${USER_ID}/today`),
-        apiFetch(`/api/logs/${USER_ID}/summary`),
-      ]);
-      setLog(logData);
-      setSummary(summaryData.summary);
-    } catch (e) {
-      console.error("Failed to load log:", e);
-    } finally {
-      setLoading(false);
+    async function loadLog() {
+      try {
+        const [logData, summaryData] = await Promise.all([
+          apiFetch(`/api/logs/${USER_ID}/today`),
+          apiFetch(`/api/logs/${USER_ID}/summary`),
+        ]);
+
+        if (cancelled) return;
+        setLog(logData);
+        setSummary(summaryData.summary);
+      } catch (e) {
+        console.error("Failed to load log:", e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
-  }
+
+    loadLog();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function deleteEntry(entryId: number, calories: number, quantity: number) {
     setDeletingId(entryId);
@@ -125,7 +133,7 @@ export default function LogPage() {
           <p className="label">
             {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
           </p>
-          <h1 className={styles.heading}>Today's Log</h1>
+          <h1 className={styles.heading}>Today&apos;s Log</h1>
         </div>
         <Link href="/log/add" className="btn-primary">+ Add Food</Link>
       </div>

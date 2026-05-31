@@ -1,0 +1,34 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  border-top: 1px solid #244a4f;
+  background: #18373b;
+  color: #e7efea;
+  padding: 18px clamp(18px, 4vw, 56px);
+}
+
+.copy {
+  margin: 0;
+  color: #cfe0c3;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.brand {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+@media (max-width: 560px) {
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+}
