@@ -16,6 +16,10 @@ const GOAL_PRESETS = [
   { goalType: "weight",    unit: "kg",   placeholder: "e.g. 70"   },
 ];
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : "Something went wrong.";
+}
+
 export default function ProfilePage() {
   const [profile, setProfile]         = useState<Profile | null>(null);
   const [bmi, setBmi]                 = useState<Bmi | null>(null);
@@ -74,8 +78,8 @@ export default function ProfilePage() {
       const bmiData = await apiFetch(`/api/users/${USER_ID}/bmi`).catch(() => null);
       if (bmiData) setBmi(bmiData);
       setSaveMsg("Profile saved!");
-    } catch (e: any) {
-      setSaveMsg(e.message);
+    } catch (error: unknown) {
+      setSaveMsg(getErrorMessage(error));
     } finally {
       setSaving(false);
       setTimeout(() => setSaveMsg(""), 3000);
@@ -94,8 +98,8 @@ export default function ProfilePage() {
       setGoals(prev => [...prev, newGoal]);
       setGoalValue("");
       setGoalMsg("Goal added!");
-    } catch (e: any) {
-      setGoalMsg(e.message);
+    } catch (error: unknown) {
+      setGoalMsg(getErrorMessage(error));
     } finally {
       setAddingGoal(false);
       setTimeout(() => setGoalMsg(""), 3000);
@@ -103,9 +107,8 @@ export default function ProfilePage() {
   }
 
   async function deleteGoal(id: number) {
-    // optimistic update
     setGoals(prev => prev.filter(g => g.id !== id));
-    await apiFetch(`/api/goals/${id}`, { method: "DELETE" }).catch(() => loadAll());
+    await apiFetch(`/api/users/goals/${id}`, { method: "DELETE" })
   }
 
   const bmiColor =

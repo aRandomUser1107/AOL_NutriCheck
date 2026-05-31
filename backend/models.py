@@ -1,8 +1,14 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text, create_engine
 from sqlalchemy.orm import relationship, declarative_base
 import datetime
+from database import SQLALCHEMY_DATABASE_URL, Base
 
 Base = declarative_base()
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"charset": "utf8mb4"}
+)
 
 class User(Base):
     __tablename__ = "users"
