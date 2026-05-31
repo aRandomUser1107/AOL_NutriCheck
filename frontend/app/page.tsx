@@ -1,5 +1,9 @@
-import { redirect } from "next/navigation";
+import AuthPage from "./AuthPage";
 
 export default function Home() {
-  redirect("/dashboard");
+  return (
+    <main>
+      <AuthPage />
+    </main>
+  );
 }
