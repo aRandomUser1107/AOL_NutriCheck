@@ -70,6 +70,29 @@ def calculate_bmi(user_id: int, db: Session = Depends(get_db)):
 
     return {"bmi": bmi, "category": category, "weight_kg": profile.weight, "height_cm": profile.height}
 
+# update goal
+@router.put("/goals/{goal_id}", response_model=schemas.NutritionGoalResponse)
+def update_goal(goal_id: int, goal_data: schemas.NutritionGoalCreate, db: Session = Depends(get_db)):
+    goal = db.query(models.NutritionGoal).filter(models.NutritionGoal.id == goal_id).first()
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal not found")
+
+    for key, value in goal_data.model_dump().items():
+        setattr(goal, key, value)
+
+    db.commit()
+    db.refresh(goal)
+    return goal
+
+# delete goal
+@router.delete("/goals/{goal_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_goal(goal_id: int, db: Session = Depends(get_db)):
+    goal = db.query(models.NutritionGoal).filter(models.NutritionGoal.id == goal_id).first()
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal not found")
+    db.delete(goal)
+    db.commit()
+
 # nutrition goal
 @router.post("/{user_id}/goals", response_model=schemas.NutritionGoalResponse, status_code=status.HTTP_201_CREATED)
 def set_goal(user_id: int, goal_data: schemas.NutritionGoalCreate, db: Session = Depends(get_db)):
@@ -93,25 +116,3 @@ def get_goals(user_id: int, db: Session = Depends(get_db)):
     if not profile:
         raise HTTPException(status_code=404, detail="Health profile not found")
     return profile.goals
-
-@router.put("/goals/{goal_id}", response_model=schemas.NutritionGoalResponse)
-def update_goal(goal_id: int, goal_data: schemas.NutritionGoalCreate, db: Session = Depends(get_db)):
-    goal = db.query(models.NutritionGoal).filter(models.NutritionGoal.id == goal_id).first()
-    if not goal:
-        raise HTTPException(status_code=404, detail="Goal not found")
-
-    for key, value in goal_data.model_dump().items():
-        setattr(goal, key, value)
-
-    db.commit()
-    db.refresh(goal)
-    return goal
-
-# delete goal
-@router.delete("/goals/{goal_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_goal(goal_id: int, db: Session = Depends(get_db)):
-    goal = db.query(models.NutritionGoal).filter(models.NutritionGoal.id == goal_id).first()
-    if not goal:
-        raise HTTPException(status_code=404, detail="Goal not found")
-    db.delete(goal)
-    db.commit()

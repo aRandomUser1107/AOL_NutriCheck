@@ -107,9 +107,8 @@ export default function ProfilePage() {
   }
 
   async function deleteGoal(id: number) {
-    // optimistic update
     setGoals(prev => prev.filter(g => g.id !== id));
-    await apiFetch(`/api/goals/${id}`, { method: "DELETE" }).catch(() => loadAll());
+    await apiFetch(`/api/users/goals/${id}`, { method: "DELETE" })
   }
 
   const bmiColor =
