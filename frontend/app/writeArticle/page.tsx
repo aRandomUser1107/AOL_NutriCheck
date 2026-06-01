@@ -2,7 +2,8 @@
 // Route: /write-article
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { apiFetch, getNutritionistId, getRole } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import "../articles/article.css";
 
@@ -13,6 +14,63 @@ export default function WriteArticle() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("")
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setRole(getRole());
+  }, []);
+
+  if (role && role !== "nutritionist") {
+    return (
+      <div className="write-page">
+        <h1>Access Denied</h1>
+        <p>Only certified nutritionists can publish articles.</p>
+      </div>
+    );
+  }
+
+  async function handleSubmit() {
+  const nutritionistId = getNutritionistId();
+
+  if (!nutritionistId) {
+    alert("Nutritionist account required.");
+    return;
+  }
+
+  if (!title.trim()) {
+    alert("Please enter a title.");
+    return;
+    }
+
+    if (!content.trim()) {
+      alert("Please enter article content.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await apiFetch(
+        `/api/articles/?nutritionist_id=${nutritionistId}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            content,
+          }),
+        }
+      );
+
+      alert("Article published successfully!");
+      router.push("/articles");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to publish article.");
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <>
@@ -96,7 +154,13 @@ export default function WriteArticle() {
         </div>
 
         <div className="write-submit-row">
-          <button className="btn-submit" onClick={handleSubmit}>Submit for Review</button>
+          <button 
+            className="btn-submit"
+            onClick={handleSubmit}
+            disabled={loading}
+            >
+              {loading? "Publishing...":"Submit for review"}
+          </button>
           <button className="btn-cancel" onClick={() => router.back()}>Cancel</button>
         </div>
       </div>

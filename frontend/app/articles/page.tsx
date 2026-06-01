@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import { useRouter } from 'next/navigation'
 import styles from "./articles.module.css";
 
 type Article = {
@@ -24,6 +25,7 @@ function formatDate(value: string) {
 }
 
 export default function ArticlesPage() {
+  const router = useRouter()
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -65,7 +67,12 @@ export default function ArticlesPage() {
         ) : articles.length > 0 ? (
           <div className={styles.articleList}>
             {articles.map((article) => (
-              <article key={article.id} className={styles.articleItem}>
+              <article 
+                key={article.id} 
+                className={styles.articleItem}
+                onClick={() => router.push(`/articlePage/${article.id}`)}
+                style = {{cursor: 'pointer'}}
+                >
                 <div className={styles.articleMeta}>
                   <span>{formatDate(article.postDate)}</span>
                   <span>Nutritionist #{article.writer_id}</span>
