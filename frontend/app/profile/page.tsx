@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { apiFetch, USER_ID } from "@/lib/api";
+import { apiFetch, getUserId } from "@/lib/api";
 import styles from "./profile.module.css";
 
 type Profile = { id?: number; age: number; height: number; weight: number };
@@ -45,8 +45,8 @@ export default function ProfilePage() {
     setLoading(true);
     try {
       const [profileData, goalsData] = await Promise.allSettled([
-        apiFetch(`/api/users/${USER_ID}/profile`),
-        apiFetch(`/api/users/${USER_ID}/goals`),
+        apiFetch(`/api/users/${getUserId()}/profile`),
+        apiFetch(`/api/users/${getUserId()}/goals`),
       ]);
       if (profileData.status === "fulfilled") {
         const p = profileData.value;
@@ -55,7 +55,7 @@ export default function ProfilePage() {
         setHeight(String(p.height));
         setWeight(String(p.weight));
         // load BMI too
-        const bmiData = await apiFetch(`/api/users/${USER_ID}/bmi`).catch(() => null);
+        const bmiData = await apiFetch(`/api/users/${getUserId()}/bmi`).catch(() => null);
         if (bmiData) setBmi(bmiData);
       }
       if (goalsData.status === "fulfilled") setGoals(goalsData.value);
@@ -70,12 +70,12 @@ export default function ProfilePage() {
     try {
       const body = { age: Number(age), height: Number(height), weight: Number(weight) };
       const method = profile?.id ? "PUT" : "POST";
-      const saved = await apiFetch(`/api/users/${USER_ID}/profile`, {
+      const saved = await apiFetch(`/api/users/${getUserId()}/profile`, {
         method,
         body: JSON.stringify(body),
       });
       setProfile(saved);
-      const bmiData = await apiFetch(`/api/users/${USER_ID}/bmi`).catch(() => null);
+      const bmiData = await apiFetch(`/api/users/${getUserId()}/bmi`).catch(() => null);
       if (bmiData) setBmi(bmiData);
       setSaveMsg("Profile saved!");
     } catch (error: unknown) {
@@ -91,7 +91,7 @@ export default function ProfilePage() {
     setAddingGoal(true); setGoalMsg("");
     try {
       const preset = GOAL_PRESETS.find(p => p.goalType === goalType)!;
-      const newGoal = await apiFetch(`/api/users/${USER_ID}/goals`, {
+      const newGoal = await apiFetch(`/api/users/${getUserId()}/goals`, {
         method: "POST",
         body: JSON.stringify({ goalType, targetValue: Number(goalValue), unit: preset.unit }),
       });
@@ -108,7 +108,7 @@ export default function ProfilePage() {
 
   async function deleteGoal(id: number) {
     setGoals(prev => prev.filter(g => g.id !== id));
-    await apiFetch(`/api/users/goals/${id}`, { method: "DELETE" })
+    await apiFetch(`/api/users/${getUserId()}/goals/${id}`, { method: "DELETE" })
   }
 
   const bmiColor =
@@ -134,7 +134,6 @@ export default function ProfilePage() {
       ) : (
         <div className={styles.grid}>
 
-          {/* ── Left column ── */}
           <div className={styles.leftCol}>
 
             {/* Profile form */}

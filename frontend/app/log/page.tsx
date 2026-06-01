@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { apiFetch, USER_ID } from "@/lib/api";
+import { apiFetch, getUserId } from "@/lib/api";
 import styles from "./log.module.css";
 import { GiShinyApple } from "react-icons/gi";
 import { MdFreeBreakfast } from "react-icons/md";
@@ -74,8 +74,8 @@ export default function LogPage() {
     async function loadLog() {
       try {
         const [logData, summaryData] = await Promise.all([
-          apiFetch(`/api/logs/${USER_ID}/today`),
-          apiFetch(`/api/logs/${USER_ID}/summary`),
+          apiFetch(`/api/logs/${getUserId()}/today`),
+          apiFetch(`/api/logs/${getUserId()}/summary`),
         ]);
 
         if (cancelled) return;

@@ -81,10 +81,3 @@ export async function apiFetch(path: string, options?: RequestInit) {
   if (res.status === 204) return null;
   return res.json();
 }
-
-// ── Temporary fallbacks (used until full auth flow is wired) ──
-// These read from localStorage if available, otherwise fall back to 1
-// Remove these once all pages use getUserId() / getRole() directly
-export const USER_ID         = typeof window !== "undefined" ? getUserId() || 1 : 1;
-export const USER_ROLE       = typeof window !== "undefined" ? getRole() : "user";
-export const NUTRITIONIST_ID = typeof window !== "undefined" ? getNutritionistId() ?? 1 : 1;

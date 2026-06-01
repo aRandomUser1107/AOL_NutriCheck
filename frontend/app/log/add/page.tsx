@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { apiFetch, USER_ID } from "@/lib/api";
+import { apiFetch, getUserId } from "@/lib/api";
 import styles from "./add.module.css";
 import { FiSearch } from "react-icons/fi";
 import { GiFruitBowl } from "react-icons/gi";
@@ -151,7 +151,7 @@ function AddFoodInner() {
     if (!selected) { setError("Please select a food item."); return; }
     setAdding(true); setError("");
     try {
-      await apiFetch(`/api/logs/${USER_ID}/entries`, {
+      await apiFetch(`/api/logs/${getUserId()}/entries`, {
         method: "POST",
         body: JSON.stringify({ food_id: selected.id, category, quantity }),
       });

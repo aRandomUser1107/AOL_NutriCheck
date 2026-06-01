@@ -3,7 +3,7 @@
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 24px;
   width: 100%;
@@ -52,9 +52,99 @@
   outline: none;
 }
 
+.navLinkActive {
+  background: #244a4f;
+  color: #ffffff;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #40798C;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #244a4f;
+  transition: background 0.15s, border-color 0.15s;
+}
+.avatar:hover { background: #70A9A1; border-color: #70A9A1; }
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #1e4047;
+  border: 1px solid #244a4f;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  min-width: 200px;
+  z-index: 100;
+  overflow: hidden;
+  animation: dropIn 0.15s ease;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownHeader {
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dropdownName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.dropdownRole {
+  font-size: 12px;
+  color: #9EC1A3;
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: #244a4f;
+  margin: 2px 0;
+}
+
+.dropdownItem {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e7efea;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.dropdownItem:hover { background: #244a4f; }
+
+.logoutBtn { color: #f87171; }
+.logoutBtn:hover { background: rgba(248,113,113,0.1); }
+
 @media (max-width: 920px) {
   .header {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
   }
 
   .nav {
@@ -62,6 +152,11 @@
     justify-content: flex-start;
     overflow-x: auto;
     padding-bottom: 2px;
+  }
+
+  .avatarWrap {
+    grid-row: 1;
+    grid-column: 2;
   }
 }
 
@@ -74,5 +169,4 @@
   .navLink {
     padding: 9px 10px;
   }
-
 }

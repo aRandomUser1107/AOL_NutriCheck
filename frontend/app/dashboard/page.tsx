@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { apiFetch, USER_ID } from "@/lib/api";
+import { apiFetch, getUserId, isLoggedIn } from "@/lib/api";
 import styles from "./dashboard.module.css";
 
 type Summary = {
@@ -47,6 +48,7 @@ function formatDate(value: string) {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [summary, setSummary] = useState<Summary | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [bmi, setBmi] = useState<Bmi | null>(null);
@@ -54,11 +56,17 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!isLoggedIn()) {
+      router.replace("/login");
+    }
+  }, [router]);
+
+  useEffect(() => {
     async function loadDashboard() {
       try {
         const [summaryData, profileData, articlesData] = await Promise.allSettled([
-          apiFetch(`/api/logs/${USER_ID}/summary`),
-          apiFetch(`/api/users/${USER_ID}/profile`),
+          apiFetch(`/api/logs/${getUserId()}/summary`),
+          apiFetch(`/api/users/${getUserId()}/profile`),
           apiFetch("/api/articles/"),
         ]);
 
@@ -68,7 +76,7 @@ export default function DashboardPage() {
 
         if (profileData.status === "fulfilled") {
           setProfile(profileData.value);
-          const bmiData = await apiFetch(`/api/users/${USER_ID}/bmi`).catch(() => null);
+          const bmiData = await apiFetch(`/api/users/${getUserId()}/bmi`).catch(() => null);
           if (bmiData) setBmi(bmiData);
         }
 
