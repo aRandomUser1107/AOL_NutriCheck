@@ -22,31 +22,45 @@ export function saveSession(data: {
   role: "user" | "nutritionist";
   nutritionist_id: number | null;
 }) {
-  localStorage.setItem("nutricheck_token",           data.access_token);
-  localStorage.setItem("nutricheck_user_id",         String(data.user_id));
-  localStorage.setItem("nutricheck_username",        data.username);
-  localStorage.setItem("nutricheck_role",            data.role);
-  localStorage.setItem("nutricheck_nutritionist_id", String(data.nutritionist_id ?? ""));
+  localStorage.setItem("nutricheck_token", data.access_token);
+  localStorage.setItem("nutricheck_user_id", String(data.user_id));
+  localStorage.setItem("nutricheck_username", data.username);
+  localStorage.setItem("nutricheck_role", data.role);
+  localStorage.setItem(
+    "nutricheck_nutritionist_id",
+    String(data.nutritionist_id ?? ""),
+  );
 }
 
 export function clearSession() {
-  ["nutricheck_token", "nutricheck_user_id", "nutricheck_username",
-   "nutricheck_role", "nutricheck_nutritionist_id"].forEach(k => localStorage.removeItem(k));
+  [
+    "nutricheck_token",
+    "nutricheck_user_id",
+    "nutricheck_username",
+    "nutricheck_role",
+    "nutricheck_nutritionist_id",
+  ].forEach((k) => localStorage.removeItem(k));
 }
 
 export function getUserId(): number {
+  if (typeof window === "undefined") return 0;
   return parseInt(localStorage.getItem("nutricheck_user_id") ?? "0");
 }
 
 export function getRole(): "user" | "nutritionist" {
-  return (localStorage.getItem("nutricheck_role") ?? "user") as "user" | "nutritionist";
+  if (typeof window === "undefined") return "user";
+  return (localStorage.getItem("nutricheck_role") ?? "user") as
+    | "user"
+    | "nutritionist";
 }
 
 export function getUsername(): string {
+  if (typeof window === "undefined") return "";
   return localStorage.getItem("nutricheck_username") ?? "";
 }
 
 export function getNutritionistId(): number | null {
+  if (typeof window === "undefined") return null;
   const val = localStorage.getItem("nutricheck_nutritionist_id");
   return val ? parseInt(val) : null;
 }
