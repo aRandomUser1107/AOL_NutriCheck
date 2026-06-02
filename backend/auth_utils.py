@@ -9,11 +9,10 @@ import os
 
 SECRET_KEY  = os.getenv("JWT_SECRET", "change-this-in-production")
 ALGORITHM   = os.getenv("JWT_ALGORITHM", "HS256")
-EXPIRE_MINS = int(os.getenv("JWT_EXPIRE_MINUTES", "1440"))  # 24 hours
+EXPIRE_MINS = int(os.getenv("JWT_EXPIRE_MINUTES", "1440")) 
 
 bearer_scheme = HTTPBearer()
 
-# ── Create token ──────────────────────────────────────────
 def create_token(user_id: int, role: str, nutritionist_id: int | None) -> str:
     payload = {
         "sub":              str(user_id),
@@ -23,7 +22,6 @@ def create_token(user_id: int, role: str, nutritionist_id: int | None) -> str:
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
-# ── Decode token ──────────────────────────────────────────
 def decode_token(token: str) -> dict:
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -32,7 +30,6 @@ def decode_token(token: str) -> dict:
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token.")
 
-# ── Dependency: get current user from Bearer token ────────
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     db: Session = Depends(get_db),
@@ -43,7 +40,6 @@ def get_current_user(
         raise HTTPException(status_code=401, detail="User not found.")
     return user
 
-# ── Dependency: require nutritionist role ─────────────────
 def require_nutritionist(current_user: models.User = Depends(get_current_user)) -> models.User:
     if not current_user.nutritionist_profile:
         raise HTTPException(status_code=403, detail="Nutritionist access required.")

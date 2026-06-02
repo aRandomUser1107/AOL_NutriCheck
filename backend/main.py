@@ -16,7 +16,7 @@ app = FastAPI(
 
 origins = [
     "http://localhost:3000",
-    "https://aol-nutri-check.vercel.app/" 
+    "https://aol-nutri-check.vercel.app" 
 ]
 
 # connect with frontend (Next.js)
