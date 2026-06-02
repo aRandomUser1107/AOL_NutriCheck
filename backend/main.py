@@ -14,15 +14,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
-ALLOWED_ORIGINS = os.getenv(
-    "ALLOWED_ORIGINS",
-    "http://localhost:3000"  # fallback for local dev
-).split(",")
+origins = [
+    "http://localhost:3000",
+    "https://aol-nutri-check.vercel.app/" 
+]
 
 # connect with frontend (Next.js)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
